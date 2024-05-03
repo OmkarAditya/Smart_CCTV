@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servo Control</title>
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .slider-container {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Servo Control</h1>
+
+    <div class="container">
+        <div class="slider-container">
+            <label for="servoSelect">Select Servo:</label>
+            <select id="servoSelect">
+                <option value="1">Servo 1</option>
+                <option value="2">Servo 2</option>
+                <option value="3">Servo 3</option>
+                <option value="4">Servo 4</option>
+            </select>
+        </div>
+
+        <div class="slider-container">
+            <label for="joystick">Joystick:</label>
+            <input type="range" id="joystick" min="0" max="180" step="1" value="90" />
+        </div>
+    </div>
+
+    <script>
+        var selectedServo = document.getElementById('servoSelect').value;
+        var joystick = document.getElementById('joystick');
+        
+        joystick.addEventListener('input', function() {
+            var joystickValue = joystick.value;
+            var url = '/' + selectedServo + '/' + joystickValue;
+            fetch(url, { method: 'POST' });
+        });
+
+        document.getElementById('servoSelect').addEventListener('change', function() {
+            selectedServo = this.value;
+        });
+    </script>
+</body>
+</html>
